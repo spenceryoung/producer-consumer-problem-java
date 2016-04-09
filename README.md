@@ -1,5 +1,5 @@
 # start
 
-consumer producer problem with a bounder buffer
+producer consumer problem with a bounder buffer
 
 Java
