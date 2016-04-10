@@ -22,11 +22,11 @@ public class Consumer extends Thread {
                 catch (InterruptedException e) { }
                 while (buffer.in == buffer.out){
                     try {
-                    Thread.sleep(randNum());
-                }
-                catch (InterruptedException e) { }
-                }
-                next_consumed = buffer.buffArray[buffer.out];
+                        Thread.sleep(randNum());
+                    }
+                    catch (InterruptedException e) { }
+                    }
+                    next_consumed = buffer.buffArray[buffer.out];
                 System.out.println(currentTimeMillis() + " Consuming " + next_consumed
                         + " from the buffer location " + buffer.out);
                 buffer.out = (buffer.out + 1) % buffer.ARRAY_SIZE;
