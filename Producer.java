@@ -19,7 +19,7 @@ public class Producer extends Thread {
                     Thread.sleep(randNum());
                 }
                 catch (InterruptedException e) { }
-                while (((buffer.in + 1) % buffer.ARRAY_SIZE) == buffer.out){
+                while (((buffer.in + 1) % buffer.ARRAY_SIZE) == buffer.out) {
                     try {
                         Thread.sleep(randNum());
                     }

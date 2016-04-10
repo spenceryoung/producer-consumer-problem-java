@@ -20,12 +20,12 @@ public class Consumer extends Thread {
                     Thread.sleep(randNum());
                 }
                 catch (InterruptedException e) { }
-                while (buffer.in == buffer.out){
+                while (buffer.in == buffer.out) {
                     try {
                         Thread.sleep(randNum());
                     }
                     catch (InterruptedException e) { }
-                    }
+                }
                     next_consumed = buffer.buffArray[buffer.out];
                 System.out.println(currentTimeMillis() + " Consuming " + next_consumed
                         + " from the buffer location " + buffer.out);
