@@ -12,20 +12,23 @@ public class Consumer extends Thread {
     
     @Override
     public void run() {
+        int next_consumed;
+        
         for(int i=0; i<10000000; i++) {
-            int next_consumed = 0;
-            
             while (true) {
                 try {
                     Thread.sleep(randNum());
                 }
                 catch (InterruptedException e) { }
-                while (buffer.in == buffer.out) {
-                    System.out.println("consumer looping");
-                }    
+                while (buffer.in == buffer.out){
+                    try {
+                    Thread.sleep(randNum());
+                }
+                catch (InterruptedException e) { }
+                }
+                next_consumed = buffer.buffArray[buffer.out];
                 System.out.println(currentTimeMillis() + " Consuming " + next_consumed
                         + " from the buffer location " + buffer.out);
-                next_consumed = buffer.buffArray[buffer.out];
                 buffer.out = (buffer.out + 1) % buffer.ARRAY_SIZE;
             }
         }
