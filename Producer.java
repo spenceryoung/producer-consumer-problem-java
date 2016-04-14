@@ -13,8 +13,11 @@ public class Producer extends Thread {
     @Override
     public void run() {
         int next_produced = 0;
+        long start = System.currentTimeMillis();
+        long stop = start + 15000;
+        
         for(int i=0; i<10000000; i++) {
-            while (true) {
+            while (System.currentTimeMillis() < stop) {
                 try {
                     Thread.sleep(randNum());
                 }
@@ -26,7 +29,7 @@ public class Producer extends Thread {
                     catch (InterruptedException e) { }
                 }
                 buffer.buffArray[buffer.in] = next_produced;
-                System.out.println(currentTimeMillis() + " Placing " + next_produced
+                System.out.println(System.currentTimeMillis() + " Placing " + next_produced
                         + " in the buffer location " + buffer.in);
                 buffer.in = (buffer.in + 1) % buffer.ARRAY_SIZE;
                 if (next_produced == 14){
