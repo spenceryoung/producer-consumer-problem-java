@@ -1,6 +1,5 @@
 package start;
 
-import static java.lang.System.currentTimeMillis;
 import static start.Buffer.randNum;
 
 public class Consumer extends Thread {
