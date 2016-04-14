@@ -14,6 +14,7 @@ public class Producer extends Thread {
         this.buffer = BUFFER;
     }
     
+    
     @Override
     public void run() {
         
@@ -31,14 +32,18 @@ public class Producer extends Thread {
                 // Sleep for the results of the randNum function before checking the buffer
                 Thread.sleep(randNum());
             }
-            catch (InterruptedException e) { }
+            catch (InterruptedException ex) { 
+                Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             // Continue to sleep for random times as long as the buffer is full
             while (((buffer.in + 1) % buffer.ARRAY_SIZE) == buffer.out) {
                 try {
                     Thread.sleep(randNum());
                 }
-                catch (InterruptedException e) { }
+                catch (InterruptedException ex) { 
+                    Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
             // Place next_produced to 'in' array position
@@ -47,10 +52,10 @@ public class Producer extends Thread {
                     + " in the buffer location " + buffer.in);
 
             // Write the results to producer.txt
-            try (FileWriter writer = new FileWriter("producer.txt", true)) {
-                writer.write(System.currentTimeMillis() + ", Placing " + next_produced
+            try (FileWriter output = new FileWriter("producer.txt", true)) {
+                output.write(System.currentTimeMillis() + ", Placing " + next_produced
                     + " in the buffer location " + buffer.in);
-                writer.write("\r\n"); 
+                output.write("\r\n"); 
             } catch (IOException ex) {
                 Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -59,7 +64,7 @@ public class Producer extends Thread {
             // If the current position is the end of the array, go back to the first position
             buffer.in = (buffer.in + 1) % buffer.ARRAY_SIZE;
 
-            // Sequentially generate numbers produced from 0-14
+            //  generate integers from 0-14 and assign it to next_produced
             if (next_produced == 14){
                 next_produced = 0;
             } else {

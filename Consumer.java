@@ -31,14 +31,18 @@ public class Consumer extends Thread {
                 // Sleep for the results of the randNum function before checking the buffer
                 Thread.sleep(randNum());
             }
-            catch (InterruptedException e) { }
+            catch (InterruptedException ex) { 
+                Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             // Continue to sleep for random times as long as the buffer is empty
             while (buffer.in == buffer.out) {
                 try {
                     Thread.sleep(randNum());
                 }
-                catch (InterruptedException e) { }
+                catch (InterruptedException ex) { 
+                    Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
             // Consume next_consmed from 'out' array position
@@ -47,10 +51,10 @@ public class Consumer extends Thread {
                     + " from the buffer location " + buffer.out);
             
             // Write the results to producer.txt
-            try (FileWriter writer = new FileWriter("consumer.txt", true)) {
-                writer.write(System.currentTimeMillis() + ", Consuming " + next_consumed
+            try (FileWriter output = new FileWriter("consumer.txt", true)) {
+                output.write(System.currentTimeMillis() + ", Consuming " + next_consumed
                     + " from the buffer location " + buffer.out);
-                writer.write("\r\n");
+                output.write("\r\n");
             } catch (IOException ex) {
                 Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
             }
